@@ -15,14 +15,14 @@ class CurrencyExchange
         $this->value = $value;
     }
 
-    public function getTheApiResponse() : float
+    public function getTheApiResponse() : string
     {
         try {
             $params = array('currency' => $this->currency, 'value' => $this->value);
             $url = 'https://blockchain.info/tobtc?' . http_build_query($params);
             $inquiry = curl_init($url);
             curl_setopt($inquiry, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($inquiry, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+            curl_setopt($inquiry, CURLOPT_HTTPHEADER, array('Content-Type: text/html'));
             curl_setopt($inquiry, CURLOPT_SSL_VERIFYPEER, false);
             $result = curl_exec($inquiry);
             $info = curl_getinfo($inquiry);
@@ -31,7 +31,7 @@ class CurrencyExchange
             } elseif ($info['http_code'] >= 400) {
                 throw new \Exception("An error has occurred. Error code {$info['http_code']}");
             } else {
-                return json_decode($result, true);
+                return $result;
             }
         }
         catch(\Exception $error) {
