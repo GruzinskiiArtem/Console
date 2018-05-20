@@ -3,12 +3,16 @@
 
 require __DIR__.'/../vendor/autoload.php';
 
-use App\Consol\Bitcoin\ConvertCommand;
 
+use App\Console\Commands\Bitcoin\ConvertCommand;
+use App\Console\Commands\Bitcoin\CurrenciesCommand;
+use App\Console\Commands\Bitcoin\InfoCommand;
 use Symfony\Component\Console\Application;
 
 $application = new Application();
 
 $application->add(new ConvertCommand());
+$application->add(new CurrenciesCommand());
+$application->add(new InfoCommand());
 
 $application->run();
